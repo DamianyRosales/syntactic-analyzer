@@ -1,0 +1,9 @@
+reservedWord, int id, num1
+assign, =
+intVal, 10
+eos, ;
+reservedWord, int
+id, num2
+assign, =
+intVal, 20
+eos, ;

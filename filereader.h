@@ -5,14 +5,14 @@
 
 using namespace std;
 
-int main()
+vector<string> readFile(string path )
 {
    string myText;
    vector <string> arrayTokens;
 
-   // Read from the text file
-   ifstream MyReadFile("tokens.txt");
-// read the file and print each line 
+  
+   ifstream MyReadFile(path);
+
 
    if (MyReadFile.is_open())
    {
@@ -27,12 +27,8 @@ int main()
       cout << "Unable to open file";
    }
 
-   // Close the file
+ 
    MyReadFile.close();
 
-   cout << "The tokens are: " << endl;
-   for (int i = 0; i < arrayTokens.size(); i++)
-   {
-      cout << arrayTokens[i] << endl;
-   }
+   return arrayTokens;
 }

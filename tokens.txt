@@ -1,4 +1,5 @@
-reservedWord, int id, num1
+reservedWord, int 
+id, num1
 assign, =
 intVal, 10
 eos, ;

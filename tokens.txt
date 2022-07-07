@@ -1,10 +1,10 @@
 int, int 
 id, num1
-ASO, =
+=, =
 int_v, 10
 ;, ;
-int, int
+int, string
 id, num2
-ASO, =
+=, =
 int_v, 20
 ;, ;

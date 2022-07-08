@@ -66,7 +66,7 @@ int main()
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 0, 0, 0, 3, 0, 2, 0, 5, 7, 4, 8, 0, 0, 0, 10, 10},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 12},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 11, 11, 0, 0, 0, 11, 0, 11, 0, 11, 11, 11, 11, 0, 0, 0, 12, 12},
         {0, 0, 0, 13, 14, 15, 16, 17, 18, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 20, 21, 22, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -110,8 +110,9 @@ int main()
     int i = 0;
     int pointer = 0;
     cout << arrayTokens.size() << endl;
-    while (!stack.empty() && !arrayTokens.empty())
+    while (!stack.empty() && pointer != arrayTokens.size() + 1)
     {
+        cout<<"-c---"<<arrayTokens[pointer]<<endl;
 
         if (isTerminal(stack.top()))
         {
@@ -129,9 +130,10 @@ int main()
         }
         else
         {
-            // if (arrayTokens[pointer] == "" || arrayTokens[pointer] == "}"){
-            //     stack.pop();
-            // }
+            if (arrayTokens[pointer] == " " || arrayTokens[pointer] == "}"){
+                stack.pop();
+                pointer++;
+            }
             int productionNumber =
                 oracle(
                     searchIndexArray(stack.top(), nonTerms),

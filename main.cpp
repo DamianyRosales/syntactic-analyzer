@@ -110,7 +110,7 @@ int main()
     int i = 0;
     int pointer = 0;
     cout << arrayTokens.size() << endl;
-    while (!stack.empty() && pointer != arrayTokens.size() + 1)
+    while (!stack.empty() && !arrayTokens.empty())
     {
 
         if (isTerminal(stack.top()))
@@ -129,6 +129,9 @@ int main()
         }
         else
         {
+            if (arrayTokens[pointer] == "" || arrayTokens[pointer] == "}"){
+                stack.pop();
+            }
             int productionNumber =
                 oracle(
                     searchIndexArray(stack.top(), nonTerms),
@@ -152,6 +155,7 @@ int main()
         }
     } // end of while
     cout << "top" << stack.top() << endl;
+    cout<<"-------------------"<<arrayTokens[pointer]<<endl;
     if (stack.top() == "$" && (arrayTokens.size() - 1) == pointer)
     {
         cout << "Syntax is valid!" << endl;

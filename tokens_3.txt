@@ -1,0 +1,18 @@
+str, string
+id, name
+=, =
+str_v, "Damiany es un padrote"
+;, ;
+if, if
+(, (
+id, name
+==, ==
+str_v, "Damiany es un padrote"
+), )
+{, {
+str, string
+id, msg
+=, =
+str_v, "Hubo match papi"
+;, ;
+}, }

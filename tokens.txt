@@ -1,11 +1,13 @@
-int, int 
-id, num1
-=, =
+while, while
+(, (
+id, num
+==, ==
 int_v, 10
-;, ;
-int, string
-id, num2
+), )
+{, {
+int, int
+id, num
 =, =
-int_v, 20
+int_v, 5
 ;, ;
- 
+}, }

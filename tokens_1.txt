@@ -1,0 +1,10 @@
+str, string 
+id, name
+=, =
+str_v, "Angel"
+;, ;
+int, string
+id, num2
+=, =
+int_v, 20
+;, ;

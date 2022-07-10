@@ -3,25 +3,22 @@
 #include <string>
 #include <fstream>
 
-
-
 using namespace std;
 
-vector<string> readFile(string path )
+vector<string> readFile(string path)
 {
    string myText;
-   vector <string> arrayTokens;
+   vector<string> arrayTokens;
 
-  
    ifstream MyReadFile(path);
-
 
    if (MyReadFile.is_open())
    {
       while (getline(MyReadFile, myText))
       {
-        arrayTokens.push_back(myText);
+         arrayTokens.push_back(myText);
       }
+      arrayTokens.push_back("$, eof");
       MyReadFile.close();
    }
    else
@@ -29,7 +26,6 @@ vector<string> readFile(string path )
       cout << "Unable to open file";
    }
 
- 
    MyReadFile.close();
 
    return arrayTokens;

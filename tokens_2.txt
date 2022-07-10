@@ -1,0 +1,13 @@
+if, if
+(, (
+id, id
+<, <
+int_v, 5
+), )
+{, {
+int, int
+id, new
+=, =
+int_v, 10
+;, ;
+}, }

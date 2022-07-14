@@ -60,10 +60,7 @@ public:
     bool modify(string id, string scope,
                 string Type, int lineno);
 
-    static SymbolTable *getSymbolTableInstance();
 }; // end of class
-
-SymbolTable *stInstance = nullptr;
 
 // Function to delete an identifier
 bool SymbolTable::deleteRecord(string id)
@@ -166,13 +163,4 @@ int SymbolTable::hashf(string id)
     }
 
     return (asciiSum % 100);
-}
-
-SymbolTable *SymbolTable::getSymbolTableInstance()
-{
-    if (stInstance == nullptr)
-    {
-        stInstance = new SymbolTable();
-    }
-    return stInstance;
 }

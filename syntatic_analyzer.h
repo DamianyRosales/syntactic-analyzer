@@ -4,19 +4,8 @@
 #include <vector>
 #include <cstring>
 #include "semantic_analyzer.h"
+#include "utils.h"
 using namespace std;
-
-int searchIndexArray(string word, vector<string> array)
-{
-    for (int i = 0; i <= array.size(); i++)
-    {
-        if (word == array[i])
-        {
-            return i;
-        }
-    }
-    return -1;
-}
 
 bool isTerminal(string word)
 {
@@ -33,50 +22,10 @@ int oracle(int row, int column, int matrix[30][35])
     return matrix[row][column];
 }
 
-vector<string> split(string text, string delimiter)
-{
-    size_t pos = 0;
-    string token;
-    vector<string> myVector;
-    while ((pos = text.find(delimiter)) != std::string::npos)
-    {
-        token = text.substr(0, pos);
-        myVector.push_back(token);
-        text.erase(0, pos + delimiter.length());
-    }
-    return myVector;
-}
-
-vector<string> getIndexesFromVector(int begin, int finish, vector<string> v)
-{
-    vector<string> res;
-    for (int i = begin; i <= finish; i++)
-    {
-        res.push_back(v.at(i));
-    }
-    return res;
-}
-
-stack<string> putProductionInStack(string production, stack<string> stack)
-
-{
-    vector<string> productionSplit = split(production, " ");
-    // Remove last production and push the new one
-    stack.pop();
-    if (productionSplit[0] != "€")
-    {
-        for (int i = 0; i < productionSplit.size(); i++)
-        {
-            stack.push(productionSplit[i]);
-        }
-    }
-    return stack;
-}
-
-void exec_syntatic(SymbolTable tb)
+int exec_syntatic(SymbolTable tb)
 {
     stack<string> stack;
-    vector<string> arrayTokens = readFile("tokens.txt");
+    vector<string> arrayTokens = getTokensFromFile("tokens.txt");
 
     // cout << "Tokens: " << endl;
     // for (int i = 0; i < arrayTokens.size(); i++)
@@ -101,7 +50,7 @@ void exec_syntatic(SymbolTable tb)
         {0, 0, 31, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 28, 29, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 33, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 34, 34, 34, 64, 64, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {37, 36, 36, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {37, 36, 36, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 38, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 39, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 41, 0, 0, 41},
@@ -111,9 +60,9 @@ void exec_syntatic(SymbolTable tb)
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 46, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 47, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 48, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 49, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 65, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 49, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 0, 51, 0, 0, 0, 51},
-        {0, 0, 52, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 53, 0, 0, 0, 0, 53},
+        {0, 0, 52, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 67, 67, 67, 66, 66, 66, 0, 0, 0, 0, 0, 0, 0, 0, 0, 53, 0, 0, 0, 0, 53},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 54, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 56, 0, 0, 0, 0, 0, 0, 55, 55, 55, 55, 0, 0, 0, 0, 56, 56, 56, 0, 0, 0, 0, 0, 0, 0, 0, 57, 0, 0, 0, 0, 0, 0},
         {12, 0, 0, 0, 0, 0, 0, 0, 0, 60, 60, 60, 60, 60, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 61, 0, 0, 0, 0, 61},
@@ -187,14 +136,15 @@ void exec_syntatic(SymbolTable tb)
         "<EXPRESSION> ",
         "; <VARIABLES1> <ID> ",
         "; <VARIABLES1> <VALUE> ",
-
+        "; <FUNCTIONPARAMS> <ID> ",
+        "<PARAMS> <VALUE> ",
+        "<PARAMS> <VALUE> <DT> ",
     };
     vector<string> arithmetic_symbols = {"-", "+", "*", "/"};
-
     stack.push("$");
     stack.push("<ST>");
     stack.push("<S>");
-
+    cout << productions[49] << endl;
     int i = 0;
     int pointer = 0;
     bool isVariableDeclaration = 0, isArithmeticOp = 0;
@@ -222,6 +172,12 @@ void exec_syntatic(SymbolTable tb)
                 {
                     isVariableDeclaration = 1;
                     dataTypeCheck = stack.top();
+                }
+
+                if (isVariableDeclaration && stack.top() == ";")
+                {
+
+                    isVariableDeclaration = 0;
                 }
 
                 if (searchIndexArray(stack.top(), getIndexesFromVector(9, 12, terms)) != -1)
@@ -339,10 +295,13 @@ void exec_syntatic(SymbolTable tb)
         else
         {
             cout << "Syntax is not valid" << endl;
+            return 1;
         }
     }
     else
     {
         cout << "Error semantico" << endl;
+        return 1;
     }
+    return 0;
 }

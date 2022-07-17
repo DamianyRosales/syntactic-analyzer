@@ -1,0 +1,5 @@
+function printName(string name){
+    print(name);
+}
+string name = "Angel Retana";
+printName(name);

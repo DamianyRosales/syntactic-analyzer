@@ -1,1 +1,4 @@
 *.exe
+compiled.cpp
+.vscode/
+test/

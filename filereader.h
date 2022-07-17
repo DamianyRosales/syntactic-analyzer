@@ -5,7 +5,7 @@
 
 using namespace std;
 
-vector<string> readFile(string path)
+vector<string> getTokensFromFile(string path)
 {
    string myText;
    vector<string> arrayTokens;

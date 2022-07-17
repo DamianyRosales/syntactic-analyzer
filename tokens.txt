@@ -1,13 +1,18 @@
-while, while
+str, string
+id, name
+=, =
+str_v, "Damiany es un padrote"
+;, ;
+if, if
 (, (
-id, num
+id, name
 ==, ==
-int_v, 10
+str_v, "Damiany es un padrote"
 ), )
 {, {
-int, int
-id, num
-=, =
-int_v, 5
+id, print
+(, (
+str_v, "Hubo match papi"
+), )
 ;, ;
 }, }

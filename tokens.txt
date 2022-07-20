@@ -1,18 +1,15 @@
-str, string
-id, name
-=, =
-str_v, "Damiany es un padrote"
-;, ;
-if, if
+function, function
+id, sayHello
 (, (
-id, name
-==, ==
-str_v, "Damiany es un padrote"
 ), )
 {, {
-id, print
+id, println
 (, (
-str_v, "Hubo match papi"
+str_v, "Hello world"
 ), )
 ;, ;
 }, }
+id, sayHello
+(, (
+), )
+;, ;

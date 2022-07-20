@@ -22,7 +22,7 @@ int oracle(int row, int column, int matrix[30][35])
     return matrix[row][column];
 }
 
-int exec_syntatic(SymbolTable tb)
+bool exec_syntatic(SymbolTable tb)
 {
     stack<string> stack;
     vector<string> arrayTokens = getTokensFromFile("tokens.txt");
@@ -295,13 +295,13 @@ int exec_syntatic(SymbolTable tb)
         else
         {
             cout << "Syntax is not valid" << endl;
-            return 1;
+            return true;
         }
     }
     else
     {
         cout << "Error semantico" << endl;
-        return 1;
+        return true;
     }
-    return 0;
+    return false;
 }

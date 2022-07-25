@@ -1,5 +1,4 @@
-function printName(string name){
-    print(name);
+function sayHello(){
+    println("Hello world");
 }
-string name = "Angel Retana";
-printName(name);
+sayHello();

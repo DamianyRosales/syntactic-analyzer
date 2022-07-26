@@ -154,9 +154,8 @@ bool exec_syntatic(SymbolTable tb)
     string previousValue = "", arithmeticOperator = "";
     while (pointer != arrayTokens.size())
     {
-        // cout << "inicio"
-        //      << ", pointer-->" << split(arrayTokens[pointer], ", ")[0] << endl;
-        cout << "top-->" << stack.top() << ", pointer-->" << split(arrayTokens[pointer], ", ")[0] << endl;
+        
+        // cout << "top-->" << stack.top() << ", pointer-->" << split(arrayTokens[pointer], ", ")[0] << endl;
         if (isTerminal(stack.top()))
         {
 

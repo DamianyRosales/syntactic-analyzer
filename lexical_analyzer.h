@@ -13,7 +13,7 @@
  asi como lo ha publicado la fundacion de software libre.
 
 */
-
+#pragma once
 #include <math.h>
 #include <stdio.h>
 #include <conio.h>
@@ -22,15 +22,31 @@
 #include <string.h>
 #include <iostream>
 #include <vector>
+#include "utils.h"
+#include "symbol_table.h"
 using namespace std;
 
 int MT[57][24];
 void llenar_matriz();
 void corrige_arreglo(char arre[100]);
-void fix_last_char(char *file_location);
-bool is_reserved_word(char arre[100]);
-
-main()
+void fix_last_char(const char *file_location);
+bool is_reserved_word(char arre[100], vector<string> reserved_words);
+vector<string> reserved_words = {
+    "int",
+    "float",
+    "str",
+    "function",
+    "switch",
+    "case",
+    "if",
+    "else",
+    "for",
+    "while",
+    "do",
+    "break"};
+string fileName = "test.hz";
+string tokensFileName = "tokens.txt";
+SymbolTable exec_lexical(SymbolTable st)
 {
 
     FILE *apt, *apt2;
@@ -39,20 +55,17 @@ main()
     char arre[100];
     int ind = 0;
     int ban = 0, ban2 = 0;
-    bool isStringDeclaration = false;
+    bool isStringDeclaration = false, isVar = false, isFunc = false;
+    string dt = "";
     int edo = 1;
     int ptr;
     int yesp;
 
     strncpy(arre, "", 100);
 
-    printf("Analizador lexico para C#\n");
-    // printf("Escriba el nombre del archivo que quiere analizar: ");
-    // scanf("%s", arch);
-    // printf("Intentando abrir: %s\n\n", arch);
-    // fix_last_char(arch);
-    apt = fopen("test.hz", "r");
-    apt2 = fopen("tokens.txt", "w");
+    fix_last_char(tokensFileName.c_str());
+    apt = fopen(fileName.c_str(), "r");
+    apt2 = fopen(tokensFileName.c_str(), "w");
 
     llenar_matriz();
 
@@ -64,9 +77,10 @@ main()
             continue;
         if (c == ' ' && !isStringDeclaration)
         {
-            // printf("arre --> %s", arre);
+            // Evaluate lexeme when a black space is detected
             if (ban != 1)
             {
+                string word = arre;
                 if (edo == 28)
                 {
 
@@ -78,15 +92,31 @@ main()
                     fprintf(apt2, "float_v, %s\n", arre, arre);
                     strncpy(arre, "", 100);
                 }
-                else if (is_reserved_word(arre))
+                else if (is_reserved_word(arre, reserved_words))
                 {
-                    fprintf(apt2, "%s, %s\n", arre, arre);
+                    // Check if the lexeme is a data type
+                    if (searchIndexArray(word, getIndexesFromVector(0, 2, reserved_words)) != -1)
+                    {
+                        isVar = true;
+
+                        dt = word;
+                        // Change the data type name str to string
+                        if (word == "str")
+                        {
+                            word = "string";
+                        }
+                    }
+                    fprintf(apt2, "%s, %s\n", arre, word.c_str());
                     strncpy(arre, "", 100);
                 }
                 else
                 {
-                    fprintf(apt2, "id,	%s\n", arre);
+                    fprintf(apt2, "id, %s\n", arre);
                     strncpy(arre, "", 100);
+                    // Insert symbol into the symbol table
+                    st.insert(word, (isVar) ? "var" : "func", (dt != "") ? dt : "void");
+                    dt = "";
+                    isVar = false;
                 }
                 edo = 1;
                 ind = -1;
@@ -118,7 +148,6 @@ main()
         }
         if (isalpha(c))
         {
-
             edo = MT[edo][3];
             ban = 0;
         }
@@ -175,6 +204,9 @@ main()
         case ')':
             edo = MT[edo][21];
             break;
+        case ':':
+            edo = MT[edo][22];
+            break;
         } // fin switch
 
         // Automata final states
@@ -183,7 +215,7 @@ main()
         case 3: // Asterisk
             edo = 1;
             // corrige_arreglo(arre);
-            fprintf(apt2, "*,	%s\n", arre);
+            fprintf(apt2, "*, %s\n", arre);
             strncpy(arre, "", 100);
             ind = -1;
             ban = 1;
@@ -252,7 +284,7 @@ main()
         case 15: // Greater or equal than
             edo = 1;
             // corrige_arreglo(arre);
-            fprintf(apt2, "=,	%s\n", arre);
+            fprintf(apt2, "=, %s\n", arre);
             strncpy(arre, "", 100);
             ind = -1;
             ban = 1;
@@ -353,6 +385,14 @@ main()
             ind = -1;
             ban = 1;
             break;
+        case 34: // closing paraentesis
+            edo = 1;
+            // corrige_arreglo(arre);
+            fprintf(apt2, ":, %s\n", arre);
+            strncpy(arre, "", 100);
+            ind = -1;
+            ban = 1;
+            break;
         }
 
         ind++;
@@ -360,7 +400,7 @@ main()
 
     fclose(apt2);
     fclose(apt);
-    exit(0);
+    return st;
 }
 
 void corrige_arreglo(char arre[100])
@@ -430,9 +470,12 @@ void llenar_matriz()
     MT[2][20] = 1;
     MT[1][21] = 33;
     MT[2][21] = 1;
+    MT[1][22] = 34;
+    MT[2][22] = 1;
+
 } // fin de la funcion llenar_matriz()
 
-void fix_last_char(char *file_location)
+void fix_last_char(const char *file_location)
 {
     FILE *file;
     file = fopen(file_location, "r");
@@ -458,18 +501,8 @@ void fix_last_char(char *file_location)
     }
 }
 
-bool is_reserved_word(char arre[100])
+bool is_reserved_word(char arre[100], vector<string> reserved_words)
 {
-    vector<string> reserved_words = {
-        "int",
-        "float",
-        "string",
-        "function",
-        "switch",
-        "case",
-        "if",
-        "else",
-    };
 
     int ptr;
     for (int b = 0; b < reserved_words.size(); b++)

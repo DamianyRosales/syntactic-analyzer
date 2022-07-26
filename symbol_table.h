@@ -1,4 +1,4 @@
-
+#pragma once
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -25,17 +25,6 @@ public:
         this->value = value;
         next = NULL;
     }
-
-    // void print()
-    // {
-    //     cout << "Identifier's Name:" << identifier
-    //          << "
-    //         Type : " << type
-    //          << "
-    //                Scope : " << scope
-    //          << "
-    //                        Line Number : " << lineNo << endl;
-    // }
     friend class SymbolTable;
 };
 

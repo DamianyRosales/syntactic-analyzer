@@ -16,6 +16,17 @@ int searchIndexArray(string word, vector<string> array)
     return -1;
 }
 
+int searchIndexArray(int num, vector<int> array)
+{
+    for (int i = 0; i <= array.size(); i++)
+    {
+        if (num == array[i])
+        {
+            return i;
+        }
+    }
+    return -1;
+}
 vector<string> split(string text, string delimiter)
 {
     size_t pos = 0;

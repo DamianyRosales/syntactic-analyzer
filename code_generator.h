@@ -57,6 +57,7 @@ void compileCodeGenerated(string file)
 
 string generateCode(SymbolTable tb)
 {
+    vector<string> ro_basic_symbols = {">", "<", "=", "!"};
     string fileName = "compiled.cpp";
     vector<string> preBuiltFuncsNames = {"print", "println"};
     int pointer = 0;
@@ -120,6 +121,12 @@ string generateCode(SymbolTable tb)
         {
             pointer = insertPreBuiltFunction(newCppFile, word, tokens, pointer);
             word = "";
+        }
+        if (searchIndexArray(split(tokens[pointer], ", ")[0], ro_basic_symbols) != -1 && split(tokens[pointer + 1], ", ")[0] == "=")
+        {
+            insertToken(newCppFile, split(tokens[pointer], ", ")[0] + split(tokens[pointer + 1], ", ")[0]);
+            pointer += 2;
+            continue;
         }
         insertToken(newCppFile, word);
         pointer++;

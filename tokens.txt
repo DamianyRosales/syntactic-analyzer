@@ -1,15 +1,23 @@
 function, function
-id, sayHello
+id, sayMyName
 (, (
+str, string
+id, name
 ), )
 {, {
+id, print
+(, (
+str_v, "Hello "
+), )
+;, ;
 id, println
 (, (
-str_v, "Hello world"
+id, name
 ), )
 ;, ;
 }, }
-id, sayHello
+id, sayMyName
 (, (
+str_v, "Angel"
 ), )
 ;, ;
